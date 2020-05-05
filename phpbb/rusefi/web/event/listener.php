@@ -54,7 +54,7 @@ class listener implements EventSubscriberInterface
 			'core.viewtopic_cache_user_data'			=> 'viewtopic_cache_user_data',
 //			'core.viewtopic_cache_guest_data'			=> 'viewtopic_cache_guest_data',
 			'core.viewtopic_modify_post_row'			=> 'viewtopic_modify_post_row',
-//			'core.memberlist_view_profile'				=> 'memberlist_view_profile',
+			'core.memberlist_view_profile'              => 'profile_vehicles_list',
 //			'core.search_get_posts_data'				=> 'search_get_posts_data',
 //			'core.search_modify_tpl_ary'				=> 'search_modify_tpl_ary',
 //			'core.user_setup'							=> 'user_setup',
@@ -121,6 +121,10 @@ class listener implements EventSubscriberInterface
 	* @access public
 	*/
 	public function viewtopic_modify_post_row($event)
+	{
+	}
+
+	public function profile_vehicles_list($event)
 	{
 	}
 
