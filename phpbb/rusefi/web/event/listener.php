@@ -57,7 +57,7 @@ class listener implements EventSubscriberInterface
 			'core.memberlist_view_profile'              => 'profile_vehicles_list',
 //			'core.search_get_posts_data'				=> 'search_get_posts_data',
 //			'core.search_modify_tpl_ary'				=> 'search_modify_tpl_ary',
-//			'core.user_setup'							=> 'user_setup',
+			'core.user_setup'                           => 'user_setup',
 		);
 	}
 
@@ -70,22 +70,12 @@ class listener implements EventSubscriberInterface
 	*/
 	public function user_setup($event)
 	{
-		// what page are we on?
-		$page_name = substr($this->user->page['page_name'], 0, strpos($this->user->page['page_name'], '.'));
-
-		// We only care about memberlist and viewtopic
-		if (in_array($page_name, array('viewtopic', 'memberlist', 'search')))
-		{
-			$lang_set_ext = $event['lang_set_ext'];
-			$lang_set_ext[] = array(
-				'ext_name' => 'rusefi/web',
-				'lang_set' => 'web',
+		$lang_set_ext = $event['lang_set_ext'];
+		$lang_set_ext[] = array(
+			'ext_name' => 'rusefi/web',
+			'lang_set' => 'common',
 			);
-			$this->template->assign_vars(array(
-				'S_FLAG' => true,
-			));
-			$event['lang_set_ext'] = $lang_set_ext;
-		}
+		$event['lang_set_ext'] = $lang_set_ext;
 	}
 
 	/**
