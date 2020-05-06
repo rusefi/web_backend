@@ -1,3 +1,5 @@
+imports:
+    - { resource: tables.yml }
 services:
     rusefi.web.listener:
         class: rusefi\web\event\listener
@@ -8,3 +10,11 @@ services:
             - @user
         tags:
             - { name: event.listener }
+    rusefi.web.utils:
+        class: rusefi\web\service\utils
+        arguments:
+            - '@user'
+            - '@auth'
+            - '@config'
+            - '@dbal.conn'
+            - '%rusef.web.tables.tokens%'
