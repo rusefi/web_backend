@@ -60,7 +60,7 @@ class listener implements EventSubscriberInterface
 			'core.viewtopic_cache_user_data'			=> 'viewtopic_cache_user_data',
 //			'core.viewtopic_cache_guest_data'			=> 'viewtopic_cache_guest_data',
 			'core.viewtopic_modify_post_row'			=> 'viewtopic_modify_post_row',
-			'core.memberlist_view_profile'              => 'profile_vehicles_list',
+			'core.memberlist_view_profile'              => 'profile_engines_list',
 //			'core.search_get_posts_data'				=> 'search_get_posts_data',
 //			'core.search_modify_tpl_ary'				=> 'search_modify_tpl_ary',
 			'core.user_setup'                           => 'user_setup',
@@ -120,15 +120,28 @@ class listener implements EventSubscriberInterface
 	{
 	    $user_id = $event['poster_id'];
 
-	    $count_vehicles = $this->utils->count_vehicles($user_id);
+	    $count_engines = $this->utils->count_engines($user_id);
 
 		$event['post_row'] = array_merge($event['post_row'],array(
-			'U_COUNT' => $count_vehicles,
+			'U_COUNT' => $count_engines,
+			'U_USER' => $user_id
 		));
 	}
 
-	public function profile_vehicles_list($event)
+	public function profile_engines_list($event)
 	{
+	    $id = 2 . 'x' . $event['poster_id']. 'x' . $event['profile']['user_id'];
+
+		foreach ($this->utils->get_engines($id) as $engines)
+		{
+
+		}
+
+//		$event['post_row'] = array_merge($event['post_row'],array(
+//			'U_USER' => $id
+//		));
+
+
 	}
 
 }

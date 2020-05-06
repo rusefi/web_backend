@@ -62,7 +62,7 @@ class utils
         setcookie('rusefi_token', $uid, time() + 365 * 24 * 60 * 60, '/', '.rusefi.com', true);
     }
 
-    public function count_vehicles($user_id) {
+    public function count_engines($user_id) {
 	    $sql = 'SELECT count(*) as count
 	           	FROM ' . 'msqur_engines' . ' ' . 'WHERE user_id = ' . (int) $user_id;
 
@@ -71,6 +71,21 @@ class utils
    		$this->db->sql_freeresult($result);
 
         return $data['count'];
+    }
+
+    public function get_engines($user_id) {
+	    $sql = 'SELECT *
+	           	FROM ' . 'msqur_engines' . ' ' . 'WHERE user_id = ' . (int) $user_id;
+
+   		$result = $this->db->sql_query($sql);
+		$output = array();
+		while ($row = $this->db->sql_fetchrow($result))
+		{
+			$output[] = $row;
+		}
+   		$this->db->sql_freeresult($result);
+
+        return $output;
     }
 
 	public function get_token($user_id)
