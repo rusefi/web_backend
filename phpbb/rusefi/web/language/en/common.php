@@ -13,7 +13,7 @@ if (empty($lang) || !is_array($lang))
 $lang = array_merge($lang, array(
 
 	'RUSEFI_VEHICLES'                       => 'Your Vehicles',
-	'RUSEFI_TOKENS_OVERVIEW'                => 'Access Token',
+	'RUSEFI_TOKEN'                          => 'Access Token',
 	'RUSEFI_RESET_TOKEN'                    => 'Reset Token',
 
 

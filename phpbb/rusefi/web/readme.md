@@ -22,5 +22,7 @@ select * from phpbb_migrations where migration_name like '%rusefi%'
 
 select * from phpbb_modules where module_langname like '%rusefi%'
 
+select * from phpbb_modules where module_langname like '%RUSEFI%'
+
 - Make sure the /ext/xxx/XXXs folder and files inside are removed
 - Purge the cache
