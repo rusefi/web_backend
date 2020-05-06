@@ -57,6 +57,11 @@ class utils
             );
         }
 
+    function set_token_cookie($uid) {
+        // todo: take domain from settings
+        setcookie('rusefi_token', $uid, time() + 365 * 24 * 60 * 60, '/', '.rusefi.com', true);
+    }
+
 
 	public function get_token($user_id)
 	{
@@ -76,6 +81,7 @@ class utils
 			);
 			$sql = 'INSERT INTO ' . $this->tokens_table . ' ' . $this->db->sql_build_array('INSERT', $sql_ary);
 			$this->db->sql_query($sql);
+			$this->set_token_cookie($new_token);
    		    return 'Brand new token: ' .  $new_token;
    		}
    		return 'Existing token: ' . $user['token'];
@@ -91,6 +97,7 @@ class utils
         				WHERE user_id = '" . $this->db->sql_escape($user_id) . "'";
 
         $this->db->sql_query($sql);
+        $this->set_token_cookie($new_token);
 
         return 'New token: ' .  $new_token;
 	}
