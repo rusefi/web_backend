@@ -91,8 +91,8 @@ class utils
 	{
 	    $new_token = $this->gen_uuid();
 
-	    'UPDATE ' . $this->tokens_table . "
-        				SET token = '" . $this->db->sql_escape($new_token) . ",
+	    $sql = 'UPDATE ' . $this->tokens_table . "
+        				SET token = '" . $this->db->sql_escape($new_token) . "',
         				created_at = " . time() . "
         				WHERE user_id = '" . $this->db->sql_escape($user_id) . "'";
 
