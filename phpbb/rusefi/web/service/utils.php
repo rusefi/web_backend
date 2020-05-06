@@ -24,19 +24,26 @@ class utils
    	protected $db;
 
    	/** @var string */
-   	protected $linkedaccounts_table;
+   	protected $tokens_table;
 
-	public function __construct(\phpbb\user $user, \phpbb\auth\auth $auth, \phpbb\config\config $config, \phpbb\db\driver\factory $db, $linkedaccounts_table)
+	public function __construct(\phpbb\user $user, \phpbb\auth\auth $auth, \phpbb\config\config $config, \phpbb\db\driver\factory $db, $tokens_table)
 	{
 		$this->user = $user;
 		$this->auth = $auth;
 		$this->config = $config;
 		$this->db = $db;
-		$this->linkedaccounts_table = $linkedaccounts_table;
+		$this->tokens_table = $tokens_table;
 	}
 
 	public function get_token($key)
 	{
+//	    $sql = 'SELECT user_id, token
+//           	FROM ' . $this->tokens_table . ' ' . 'WHERE user_id = ' . (int) $key;
+
+//   		$result = $this->db->sql_query($sql);
+//   		$user = $this->db->sql_fetchrow();
+//   		$this->db->sql_freeresult($result);
+
 
 
 	}

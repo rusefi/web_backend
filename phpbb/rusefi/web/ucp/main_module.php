@@ -42,6 +42,8 @@ class main_module
 	/** @var string $phpbb_admin_path */
 	protected $phpbb_admin_path;
 
+	protected $utils;
+
 	public function main($id, $mode)
 	{
 		global $config, $request, $template, $user, $db, $phpbb_container;
@@ -56,6 +58,8 @@ class main_module
 		$this->phpbb_container = $phpbb_container;
 		$this->phpbb_root_path = $phpbb_root_path;
 		$this->phpbb_admin_path = $phpbb_admin_path;
+
+		$this->utils = $this->phpbb_container->get('rusefi.web.utils');
 
     	$this->language = $this->phpbb_container->get('language');
 
@@ -77,11 +81,30 @@ class main_module
 	{
 		add_form_key(self::FORM_KEY);
 
+		if ($this->request->is_set_post('reset_token')) {
+
+            $status = "Just reset!";
+
+		} else {
+
+
+
+
+		    $status = "Hello stranger";
+		}
+
+
+
+
 		$pagination = $this->phpbb_container->get('pagination');
 		$pagination->generate_template_pagination($this->u_action, 'pagination', 'start', 0, 99999, 0);
 
 		$this->template->assign_vars(array(
-			'U_ACTION'              => str_replace('mode=overview', 'mode=management', $this->u_action),
+// replace magic keeps system parts of the action
+//			'U_ACTION'              => str_replace('mode=overview', 'mode=management', $this->u_action),
+
+			'U_ACTION'              => $this->u_action,
+			'U_STATUS'              => $status,
 			'RUSEFI_VEHICLE_COUNT'  => 3,
 		));
 	}

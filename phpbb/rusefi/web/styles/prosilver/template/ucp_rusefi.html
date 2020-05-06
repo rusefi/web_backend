@@ -1,8 +1,15 @@
 {% INCLUDE 'ucp_header.html' %}
 
+<h2>rusEFI Online Token Management</h2>
+
+
+{{ U_STATUS }}
+
 <form id="ucp" method="post" action="{{ U_ACTION }}" {{ S_FORM_ENCTYPE }}>
 
-    <h2>Hello rusEFI</h2>
+
+
+    <input type="submit" name="reset_token" value="{{ lang('RESET_TOKEN') }}" class="button1">
 
 </form>
 
