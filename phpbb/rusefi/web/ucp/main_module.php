@@ -81,20 +81,13 @@ class main_module
 	{
 		add_form_key(self::FORM_KEY);
 
+		$user_id = $this->user->data['user_id'];
+
 		if ($this->request->is_set_post('reset_token')) {
-
-            $status = "Just reset!";
-
+            $status = "Just reset! " . $this->utils->reset_token($user_id);
 		} else {
-
-
-
-
-		    $status = "Your rusEFI Online Token " . $this->utils->get_token($this->user->data['user_id']);
+		    $status = "Your rusEFI Online Token " . $this->utils->get_token($user_id);
 		}
-
-
-
 
 		$pagination = $this->phpbb_container->get('pagination');
 		$pagination->generate_template_pagination($this->u_action, 'pagination', 'start', 0, 99999, 0);

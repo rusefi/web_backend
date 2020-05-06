@@ -58,43 +58,40 @@ class utils
         }
 
 
-	public function get_token($key)
+	public function get_token($user_id)
 	{
 	    $sql = 'SELECT user_id, token
-           	FROM ' . $this->tokens_table . ' ' . 'WHERE user_id = ' . (int) $key;
+           	FROM ' . $this->tokens_table . ' ' . 'WHERE user_id = ' . (int) $user_id;
 
    		$result = $this->db->sql_query($sql);
    		$user = $this->db->sql_fetchrow();
    		$this->db->sql_freeresult($result);
 
    		if (is_null($user['token'])) {
-
-            $new_token = 'todoo';//gen_uuid();
-
+            $new_token = $this->gen_uuid();
 			$sql_ary = array(
-			    'user_id'		=> $key,
+			    'user_id'		=> $user_id,
 				'created_at'	=> time(),
 				'token'	        => $new_token,
 			);
-
 			$sql = 'INSERT INTO ' . $this->tokens_table . ' ' . $this->db->sql_build_array('INSERT', $sql_ary);
 			$this->db->sql_query($sql);
-
-   		    return 'Brand new ' .  $new_token;
-
+   		    return 'Brand new token: ' .  $new_token;
    		}
-
-   		return 'Existing ' . $user['token'];
-
-
-
+   		return 'Existing token: ' . $user['token'];
 	}
 
-	public function reset_token($key)
+	public function reset_token($user_id)
 	{
+	    $new_token = $this->gen_uuid();
 
+	    'UPDATE ' . $this->tokens_table . "
+        				SET token = '" . $this->db->sql_escape($new_token) . ",
+        				created_at = " . time() . "
+        				WHERE user_id = '" . $this->db->sql_escape($user_id) . "'";
 
+        $this->db->sql_query($sql);
+
+        return 'New token: ' .  $new_token;
 	}
-
-
 }
