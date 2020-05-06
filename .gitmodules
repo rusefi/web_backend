@@ -1,0 +1,4 @@
+[submodule "msqur"]
+	path = msqur
+	url = https://github.com/rusefi/msqur.git
+	branch = prod
