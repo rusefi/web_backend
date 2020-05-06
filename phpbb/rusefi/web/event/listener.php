@@ -29,16 +29,22 @@ class listener implements EventSubscriberInterface
 	/** @var \phpbb\user */
 	protected $user;
 
+	/** @var \rusefi\web\service\utils */
+	protected $utils;
+
 	public function __construct(
 		\phpbb\config\config $config,
 		\phpbb\request\request $request,
 		\phpbb\template\template $template,
-		\phpbb\user $user)
+		\phpbb\user $user,
+		\rusefi\web\service\utils $utils
+		)
 	{
 		$this->config = $config;
 		$this->request = $request;
 		$this->template = $template;
 		$this->user = $user;
+		$this->utils = $utils;
 	}
 
 	/**
@@ -112,6 +118,13 @@ class listener implements EventSubscriberInterface
 	*/
 	public function viewtopic_modify_post_row($event)
 	{
+	    $user_id = $event['poster_id'];
+
+	    $count_vehicles = $this->utils->count_vehicles($user_id);
+
+		$event['post_row'] = array_merge($event['post_row'],array(
+			'U_COUNT' => $count_vehicles,
+		));
 	}
 
 	public function profile_vehicles_list($event)
