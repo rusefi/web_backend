@@ -2,6 +2,8 @@
 
 rusEfi backend is facilitating data flow within [rusEfi](https://rusefi.com/) open source engine management community.
 
+[For user documentation please click here](https://github.com/rusefi/rusefi/wiki/Online)
+
 As of 2020, the primary goal of rusEfi web is to flow data from early adopters to developers.
 
 1) for developers: log file upload & sharing
