@@ -90,7 +90,7 @@ class main_module
 
 
 
-		    $status = "Hello stranger";
+		    $status = "Your rusEFI Online Token " . $this->utils->get_token($this->user->data['user_id']);
 		}
 
 
