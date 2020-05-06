@@ -1,0 +1,3 @@
+parameters:
+  rusef.web.tables.tokens: '%core.table_prefix%rusefi_tokens'
+  rusef.web.tables.vehicles: '%core.table_prefix%rusefi_vehicles'
