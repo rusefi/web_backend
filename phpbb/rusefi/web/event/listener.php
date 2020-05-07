@@ -130,18 +130,17 @@ class listener implements EventSubscriberInterface
 
 	public function profile_engines_list($event)
 	{
-	    $id = 2 . 'x' . $event['poster_id']. 'x' . $event['profile']['user_id'];
+	    $id = 2 . 'x' . $event['member']['user_id'];
 
 		foreach ($this->utils->get_engines($id) as $engines)
 		{
 
 		}
 
-//		$event['post_row'] = array_merge($event['post_row'],array(
-//			'U_USER' => $id
-//		));
 
-
+		$this->template->assign_vars(array(
+			'U_USER' => $id,
+		));
 	}
 
 }
