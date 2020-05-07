@@ -1,8 +1,28 @@
-<h2>Vehicles</h2>
-
-{U_USER}
-
-<img src="/forum/ext/rusefi/web/rusEFI_car.png"/>
 
 <div id="profile_rusefi_list">
+    <h2>Vehicles</h2>
+
+
+<!--{U_USER}-->
+
+{% if E_COUNT %}
+
+    <img src="/forum/ext/rusefi/web/rusEFI_car.png"/><br/>
+
+
+        {% for engine in engines %}
+            {{ engine.E_MAKE }}
+            {{ engine.E_CODE }}
+            <br/>
+        {% endfor %}
+
+
+{% else %}
+
+No engines - please share your tune at XXX!
+
+
+{% endif %}
+
+
 </div>
