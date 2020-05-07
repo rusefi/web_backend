@@ -11,8 +11,10 @@
 
 
         {% for engine in engines %}
-            {{ engine.E_MAKE }}
-            {{ engine.E_CODE }}
+            <a href="XXX?{{ engine.E_ID }}">
+                {{ engine.E_MAKE }}
+                {{ engine.E_CODE }}
+            </a>
             <br/>
         {% endfor %}
 
