@@ -1,3 +1,14 @@
+# how all this works?
+
+Publicly visible stuff happens via ``styles/prosilver/template/event`` magic files and 
+``event/listener.php``
+
+
+User Control Point logic is in ``ucp/main_module.pbp``
+
+
+# clean-up hints
+
 To manually get rid of XXX (this will remove all data):
 
 - Delete the row for the extension from the phpbb_ext table.
