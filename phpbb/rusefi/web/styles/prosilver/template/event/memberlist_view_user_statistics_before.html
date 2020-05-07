@@ -11,7 +11,7 @@
 
 
         {% for engine in engines %}
-            <a href="XXX?{{ engine.E_ID }}">
+            <a href="/online/view.php?msq={{ engine.E_ID }}">
                 {{ engine.E_MAKE }}
                 {{ engine.E_CODE }}
             </a>
@@ -21,7 +21,7 @@
 
 {% else %}
 
-No engines - please share your tune at XXX!
+    No engines - please share your tune at <a href="/online">rusEFI online</a>!
 
 
 {% endif %}
