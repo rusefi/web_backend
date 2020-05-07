@@ -74,8 +74,9 @@ class utils
     }
 
     public function get_engines($user_id) {
-	    $sql = 'SELECT *
-	           	FROM ' . 'msqur_engines' . ' ' . 'WHERE user_id = ' . (int) $user_id;
+	    $sql = 'SELECT m.file AS id, e.make AS make, e.code AS code FROM msqur_metadata m '.
+	    	'JOIN (SELECT id,name,make,code FROM msqur_engines WHERE user_id = ' . (int) $user_id . ') e '.
+	    	'WHERE m.engine = e.id GROUP BY e.name ORDER BY m.file DESC';
 
    		$result = $this->db->sql_query($sql);
 		$output = array();
