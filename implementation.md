@@ -9,7 +9,18 @@ User has to copy paste his token into plugin settings to establish connectivity.
 
 # Domain Model
 
-Users: we use phpbb users
+Users: ``user_id``
+
+We use phpbb users.
+
+Engine:
+
+
+
+Vehicle: ``user_id, vehicle_name``
+ 
+All and each vehicle is unique! Even if you have two Miatas, those are two different vehicles.
+
 
 Engines: User,Make,Code,Displacement,Compression,Aspiration
 
