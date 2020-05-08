@@ -6,6 +6,10 @@ REO frontend is a TunerStudio plug-in.
 REO token is visible to the user on his personal forum page. Users have a button to reset their REO token on their forum page.
 User has to copy paste his token into plugin settings to establish connectivity.
 
+# .ini workflow
+
+.ini files are resolved based on signature using https://rusefi.com/online/ini/rusefi/ library 
+
 
 # Domain Model
 
