@@ -224,6 +224,12 @@ a:hover	{ text-decoration: underline; }
 	border-radius: 7px;
 }
 
+.panel_content {
+	border-radius: 7px;
+	background-color: #F9F9F9;
+	padding: 5px 10px;
+}
+
 .post {
 	padding: 5px 10px;
 	margin-bottom: 4px;
