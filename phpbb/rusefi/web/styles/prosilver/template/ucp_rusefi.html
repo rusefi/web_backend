@@ -1,16 +1,21 @@
 {% INCLUDE 'ucp_header.html' %}
-
 <h2>rusEFI Online Token Management</h2>
-
 
 {{ U_STATUS }}
 
 <form id="ucp" method="post" action="{{ U_ACTION }}" {{ S_FORM_ENCTYPE }}>
-
-
-
     <input type="submit" name="reset_token" value="{{ lang('RUSEFI_RESET_TOKEN') }}" class="button1">
-
 </form>
 
+<button onclick="copyToClipboard()">Copy Token</button>
+<br>
+
+<script>
+    function copyToClipboard() {
+        var token = document.getElementById("cp-main").textContent.split(':')[1];
+        var copytoken = $('<input>').val(ctoken).appendTo('body').select();
+        document.execCommand('copy');
+        copytoken.remove();
+    }
+</script>
 {% INCLUDE 'ucp_footer.html' %}
