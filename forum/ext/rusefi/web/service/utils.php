@@ -36,6 +36,9 @@ class utils
 	}
 
 	 function gen_uuid() {
+	        // WARNING! UUID format is part of public API - for example TS plugin detects token in clipboard
+	        // based on this format! See AutoTokenUtil.java
+	        // 8-4-4-4-12
             return sprintf( '%04x%04x-%04x-%04x-%04x-%04x%04x%04x',
                 // 32 bits for "time_low"
                 mt_rand( 0, 0xffff ), mt_rand( 0, 0xffff ),
