@@ -36,6 +36,9 @@ class utils
 	}
 
 	 function gen_uuid() {
+	        // WARNING! UUID format is part of public API - for example TS plugin detects token in clipboard
+	        // based on this format! See AutoTokenUtil.java
+	        // 8-4-4-4-12
             return sprintf( '%04x%04x-%04x-%04x-%04x-%04x%04x%04x',
                 // 32 bits for "time_low"
                 mt_rand( 0, 0xffff ), mt_rand( 0, 0xffff ),
@@ -89,15 +92,6 @@ class utils
         return $output;
     }
 
-	public function get_clipboard_icon($token)
-	{
-/*
-oh, I do not like JS :()
-	    return ' <svg class="octicon octicon-clippy" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path fill-rule="evenodd" clip-rule="evenodd" d="M5.75 1C5.33579 1 5 1.33579 5 1.75V4.75C5 5.16421 5.33579 5.5 5.75 5.5H10.25C10.6642 5.5 11 5.16421 11 4.75V1.75C11 1.33579 10.6642 1 10.25 1H5.75ZM6.5 4V2.5H9.5V4H6.5ZM3.62554 3.533C3.98409 3.32559 4.10661 2.86679 3.8992 2.50825C3.6918 2.1497 3.233 2.02718 2.87446 2.23459C2.35334 2.53604 2 3.10132 2 3.75001V13.25C2 14.2165 2.7835 15 3.75 15H12.25C13.2165 15 14 14.2165 14 13.25V3.75001C14 3.10132 13.6467 2.53604 13.1255 2.23459C12.767 2.02718 12.3082 2.1497 12.1008 2.50825C11.8934 2.86679 12.0159 3.32559 12.3745 3.533C12.4511 3.57735 12.5 3.65842 12.5 3.75001V13.25C12.5 13.3881 12.3881 13.5 12.25 13.5H3.75C3.61193 13.5 3.5 13.3881 3.5 13.25V3.75001C3.5 3.65842 3.54886 3.57735 3.62554 3.533Z"></path></svg>';
-*/
-        return '';
-	}
-
 	public function get_token($user_id)
 	{
 	    $sql = 'SELECT user_id, token
@@ -117,9 +111,9 @@ oh, I do not like JS :()
 			$sql = 'INSERT INTO ' . $this->tokens_table . ' ' . $this->db->sql_build_array('INSERT', $sql_ary);
 			$this->db->sql_query($sql);
 			$this->set_token_cookie($new_token);
-   		    return 'Brand new token: ' .  $new_token . get_clipboard_icon($new_token);
+   		    return 'Brand new token: ' .  $new_token;
    		}
-   		return 'Existing token: ' . $user['token'] . $this->get_clipboard_icon($user['token']);
+   		return 'Existing token: ' . $user['token'];
 	}
 
 	public function reset_token($user_id)
@@ -134,6 +128,6 @@ oh, I do not like JS :()
         $this->db->sql_query($sql);
         $this->set_token_cookie($new_token);
 
-        return 'New token: ' .  $new_token . get_clipboard_icon($new_token);
+        return 'New token: ' .  $new_token;
 	}
 }
