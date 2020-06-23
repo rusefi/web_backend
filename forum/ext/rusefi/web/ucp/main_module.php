@@ -86,7 +86,7 @@ class main_module
 		if ($this->request->is_set_post('reset_token')) {
             $status = "Just reset! " . $this->utils->reset_token($user_id);
 		} else {
-		    $status = "Your rusEFI Online Token " . $this->utils->get_token($user_id);
+		    $status = "<p><h4>" . "Your rusEFI Online Token" . "</h4></p>" . $this->utils->get_token($user_id);
 		}
 
 		$pagination = $this->phpbb_container->get('pagination');
