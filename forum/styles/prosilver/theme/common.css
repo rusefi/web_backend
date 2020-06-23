@@ -230,6 +230,14 @@ a:hover	{ text-decoration: underline; }
 	padding: 5px 10px;
 }
 
+.panel_content a {
+	font-family: monospace;
+}
+
+.panel_content svg:hover  {
+	fill: #216ddf; 
+}
+  
 .post {
 	padding: 5px 10px;
 	margin-bottom: 4px;
