@@ -77,7 +77,7 @@ class utils
     }
 
     public function get_engines($user_id) {
-	    $sql = 'SELECT MAX(m.file) AS id, e.make AS make, e.code AS code FROM msqur_engines e ' .
+	    $sql = 'SELECT MAX(m.id) AS id, e.make AS make, e.code AS code FROM msqur_engines e ' .
 	    	'INNER JOIN msqur_metadata m ON m.engine = e.id WHERE (user_id = ' . (int) $user_id . ') '.
 	    	'GROUP BY e.name';
 
