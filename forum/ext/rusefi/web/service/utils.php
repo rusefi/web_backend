@@ -77,9 +77,12 @@ class utils
     }
 
     public function get_engines($user_id) {
-	    $sql = 'SELECT MAX(m.id) AS id, e.make AS make, e.code AS code FROM msqur_engines e ' .
-	    	'INNER JOIN msqur_metadata m ON m.engine = e.id WHERE (user_id = ' . (int) $user_id . ') '.
-	    	'GROUP BY e.name';
+	    /*$sql = 'SELECT MAX(m.id) AS id, e.make AS make, e.code AS code FROM msqur_engines e ' .
+            'INNER JOIN msqur_metadata m ON m.engine = e.id WHERE (user_id = ' . (int) $user_id . ') '.
+            'GROUP BY e.name';*/
+        $sql = 'SELECT e.name as name, e.user_id as user_id, e.make AS make, e.code AS code FROM msqur_engines e ' .
+            'WHERE (user_id = ' . (int) $user_id . ') '.
+            'ORDER BY e.name ASC';
 
    		$result = $this->db->sql_query($sql);
 		$output = array();

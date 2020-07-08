@@ -136,7 +136,8 @@ class listener implements EventSubscriberInterface
 		foreach ($engines as $engine)
 		{
 			$this->template->assign_block_vars('engines', array(
-				'E_ID'              => $engine['id'],
+				'E_NAME'              => $engine['name'],
+				'E_USER_ID'              => $engine['user_id'],
 				'E_MAKE'            => $engine['make'],
 				'E_CODE'            => $engine['code'],
 			));

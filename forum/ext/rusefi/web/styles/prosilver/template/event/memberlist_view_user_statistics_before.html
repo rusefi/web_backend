@@ -11,9 +11,10 @@
 
 
         {% for engine in engines %}
-            <a href="/online/view.php?msq={{ engine.E_ID }}">
+            <a href="/online/?vehicleName={{ engine.E_NAME }}&user_id={{ engine.E_USER_ID }}">
                 {{ engine.E_MAKE }}
                 {{ engine.E_CODE }}
+                {{ engine.E_NAME }}
             </a>
             <br/>
         {% endfor %}
