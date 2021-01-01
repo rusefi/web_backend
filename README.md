@@ -19,3 +19,9 @@ As of 2020, the primary goal of rusEFI web is to flow data from early adopters t
 
 
 We have [TunerStudio Plugin](https://github.com/rusefi/rusefi/wiki/TS-Plugin) as one of the frontends.
+
+# Implementation Details
+
+Based on existing msqur project - our fork https://github.com/rusefi/msqur/tree/prod (note 'prod' branch for rusEFI changes)
+
+Very little of custom phpbb code see https://github.com/rusefi/rusefi/tree/master/misc/www/forum
