@@ -25,3 +25,5 @@ We have [TunerStudio Plugin](https://github.com/rusefi/rusefi/wiki/TS-Plugin) as
 Based on existing msqur project - our fork https://github.com/rusefi/msqur/tree/prod (note 'prod' branch for rusEFI changes)
 
 Very little of custom phpbb code see https://github.com/rusefi/rusefi/tree/master/misc/www/forum
+
+[Forum Dev Thread](https://rusefi.com/forum/viewtopic.php?f=5&t=2207)
