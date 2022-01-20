@@ -1,0 +1,16 @@
+name: Upload
+
+on:
+  push:
+    branches:
+      - master
+
+jobs:
+  upload:
+    name: Upload site
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v1
+
+      - name: Upload
+        run: tar -czf - . | sshpass -p ${{secrets.RUSEFI_SSH_PASS}} ssh -o StrictHostKeyChecking=no ${{secrets.RUSEFI_SSH_USER}}@${{secrets.RUSEFI_SSH_SERVER}} "tar -xzf -"
