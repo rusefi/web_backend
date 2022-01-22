@@ -13,4 +13,4 @@ jobs:
       - uses: actions/checkout@v1
 
       - name: Upload
-        run: tar -czf - . | sshpass -p ${{secrets.RUSEFI_SSH_PASS}} ssh -o StrictHostKeyChecking=no ${{secrets.RUSEFI_SSH_USER}}@${{secrets.RUSEFI_SSH_SERVER}} "tar -xzf -"
+        run: tar -czf - -C www . | sshpass -p ${{secrets.RUSEFI_SSH_PASS}} ssh -o StrictHostKeyChecking=no ${{secrets.RUSEFI_SSH_USER}}@${{secrets.RUSEFI_SSH_SERVER}} "tar -xzf -"
