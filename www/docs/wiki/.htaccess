@@ -1,4 +1,4 @@
 <IfModule dir_module>
-    DocumentRoot /
+    DocumentRoot /docs/wiki/
     DirectoryIndex /Home/index.html
 </IfModule>
