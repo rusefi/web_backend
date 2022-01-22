@@ -1,6 +1,6 @@
 
 <IfModule mod_alias.c>
-Redirect /docs/wiki/  https://wiki.rusefi.com/
+Redirect permanent /docs/wiki/  https://wiki.rusefi.com/
 </IfModule>
 
 <IfModule mod_rewrite.c>
