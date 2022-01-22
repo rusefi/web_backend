@@ -1,5 +1,3 @@
-<IfModule mod_rewrite.c>
-RewriteEngine On
-
-RewriteRule ^/$ /Home
+<IfModule dir_module>
+    DirectoryIndex /Home/index.html
 </IfModule>
