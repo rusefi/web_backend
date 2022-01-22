@@ -1,3 +1,4 @@
 <IfModule dir_module>
+    DocumentRoot /
     DirectoryIndex /Home/index.html
 </IfModule>
