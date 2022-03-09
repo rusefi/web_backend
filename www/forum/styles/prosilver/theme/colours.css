@@ -149,7 +149,7 @@ table.zebra-list tr:nth-child(even) td, ul.zebra-list li:nth-child(even) {
 }
 
 .site_logo {
-	background-image: url("./images/logo_100.gif");
+	background-image: url("/style/rusefi-ukr2-07-100.png");
 }
 
 /* Horizontal lists
