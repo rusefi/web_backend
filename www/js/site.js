@@ -73,12 +73,27 @@ $(document).ready(function() {
       closePopover();
       var popover = $($(this).data('popover'));
       popover.toggleClass('open')
+      console.log(window.scrollY, window.innerHeight, popover.offset().top);
+      var distFromBottom =
+        window.innerHeight - popover.offset().top + window.scrollY;
+      if (distFromBottom < popover.height() + 20) {
+        // Open above
+        console.log("Opening above")
+      popover.toggleClass("open-top");
+      } else {
+        // Open below
+        console.log("Opening below");
+      popover.toggleClass("open-bottom");
+      }
+      console.log(distFromBottom);
       e.stopImmediatePropagation();
     }
   
     function closePopover(e) {
       if($('.popover.open').length > 0) {
         $('.popover').removeClass('open')
+        $(".popover").removeClass("open-top");
+        $(".popover").removeClass("open-bottom");
       }
     }
   
