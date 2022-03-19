@@ -557,7 +557,8 @@ html {
       top: 92%;
       left: -25%; }
     .popover.open-top {
-      top: -122%;
+      transform: translate(0, -100%); 
+      top: -5%;
       left: -25%; }
     .popover.open-bottom .popover-item:first-child .popover-link:after, 
     .popover.open-bottom .popover-item:first-child .popover-link:before,
