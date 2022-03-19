@@ -80,7 +80,6 @@ $(document).ready(function() {
       } else {
         popover.toggleClass("open-bottom");
       }
-      console.log(distFromBottom);
       e.stopImmediatePropagation();
     }
   
