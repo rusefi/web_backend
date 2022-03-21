@@ -73,12 +73,21 @@ $(document).ready(function() {
       closePopover();
       var popover = $($(this).data('popover'));
       popover.toggleClass('open')
+      var distFromBottom =
+        window.innerHeight - popover.offset().top + window.scrollY;
+      if (distFromBottom < popover.height() + 20) {
+        popover.toggleClass("open-top");
+      } else {
+        popover.toggleClass("open-bottom");
+      }
       e.stopImmediatePropagation();
     }
   
     function closePopover(e) {
       if($('.popover.open').length > 0) {
         $('.popover').removeClass('open')
+        $(".popover").removeClass("open-top");
+        $(".popover").removeClass("open-bottom");
       }
     }
   
