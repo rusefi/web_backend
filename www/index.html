@@ -65,8 +65,9 @@
       </ul>
       <ul class="navbar-list">
         <li class="menuentry">Hardware</li>
-        <li class="navbar-item"><a href="index.html#microrusefi">microRusEFI</a></li>
-        <li class="popover-item"><a href="index.html#proteus">Proteus</a></li>
+        <li class="navbar-item"><a href="index.html#uaefi">uaEFI</a></li>
+        <li class="navbar-item"><a href="index.html#microRusEFI">microRusEFI</a></li>
+        <li class="popover-item"><a href="index.html#proteus">proteus</a></li>
         <li class="popover-item"><a href="https://github.com/rusefi/rusefi/wiki/Hellen-One-Platform">Hellen One</a></li>
       </ul>
       <ul class="navbar-list">
@@ -74,8 +75,9 @@
       </ul>
       <ul class="navbar-list">
         <li class="menuentry">Documentation</li>
+        <li class="popover-item"><a href="https://github.com/rusefi/rusefi/wiki/uaEFI">uaEFI</a>
         <li class="popover-item"><a href="https://github.com/rusefi/rusefi/wiki/microRusEFI-Manual">microRusEFI</a>
-        <li class="popover-item"><a href="https://github.com/rusefi/rusefi/wiki/Proteus-Manual">Proteus</a>
+          <li class="popover-item"><a href="https://github.com/rusefi/rusefi/wiki/Proteus-Manual">Proteus</a>
         <li class="popover-item"><a href="https://github.com/rusefi/rusefi/wiki/Hellen-One-Platform">Hellen One</a></li>
       </ul>
       <ul class="navbar-list">
@@ -122,7 +124,10 @@
           <div id="hardwareNavPopover" class="popover">
             <ul class="popover-list">
               <li class="popover-item">
-                <a class="popover-link" href="index.html#microrusefi">microRusEFI</a>
+                <a class="popover-link" href="index.html#uaefi">uaEFI</a>
+              </li>
+              <li class="popover-item">
+                <a class="popover-link" href="index.html#microRusEFI">microRusEFI</a>
               </li>
               <li class="popover-item">
                 <a class="popover-link" href="index.html#proteus">Proteus</a>
@@ -143,8 +148,12 @@
                 <a class="popover-link" target="#" href="https://wiki.rusefi.com/">Wiki</a>
               </li>
               <li class="popover-item">
-                <a class="popover-link" href="https://github.com/rusefi/rusefi/wiki/microRusEFI-Manual">microRusEFI</a>
+                <a class="popover-link" href="https://github.com/rusefi/rusefi/wiki/uaEFI">uaEFI</a>
               </li>
+              <li class="popover-item">
+                <a class="popover-link" href="https://github.com/rusefi/rusefi/wiki/microRusEFI-Manual">MicroRusEFI</a>
+              </li>
+       
               <li class="popover-item">
                 <a class="popover-link" href="https://github.com/rusefi/rusefi/wiki/Proteus-Manual">Proteus</a>
               </li>
@@ -281,7 +290,54 @@
     </div>
   </div>
 
-  <div class="mre" id="microrusefi">
+
+  
+  <div class="ua" id="uaefi">
+    <div class="ua-left">
+      <div class="ua-content">
+        <img src="images/site/ua_ecu.png" width="100%">
+      </div>
+    </div>
+    <div class="ua-right">
+      <div class="ua-content">
+        <h6 class="docs-header">uaEFI</h6>
+        <img src="images/site/ua_logo.png" width="50%">
+        <br><br>
+        <p>uaEFI is a small & cheap Engine Management System board designed for fully sequential Fuel/Igniton on
+          six cylinder applications.<br>
+          uaEFI utilizes a compact form factor allowing it to fit in oem enclosure adapters or a 3D printed case with molex Connectors for wire-IN solutions.<br>
+          uaefi supports dual Hall shaft position sensor input or 2xHall + 2xVR position sensors input (may require jumper adjustments.)<br>
+          Open-source design available in <a href="https://github.com/rusefi/uaEFI">this repository</a>, or
+          available as a completely assembled ECU. <br>
+          This is an excellent option for racing series that allow modifications inside the stock ECU case.
+
+        </p>
+        <b>Features</b>
+        <ul>
+          <li>Primary VR or Hall input (configurable with few resistor changes)</li>
+          <li> Third Hall (VSS) input</li>
+          <li>2 analog thermistor (temperature) inputs</li>
+          <li>3 analog  (AUX) inputs</li>
+          <li>2 TPS inputs</li>
+          <li>6 high-Z injector outputs</li>
+          <li>2 high-current low side outputs for IAC/VVT/other solenoids (DC1,DC2)</li>
+          <li>Dedicated main relay control output</li>
+          <li>4 low-current low side outputs for relays or warning lights</li>
+          <li>6 5v logic-level ignition outputs for dumb coils populate with IGBT (READ MANUAL)</li>
+          <li>2 logic level outputs (5v/12v configurable, requires resistor changes)</li>
+          <li>Electronic throttle body (drive by wire)</li>
+          <li>CAN connectivity on the plug</li>
+          <li>USB connectivity on the plug</li>
+          <li>SPI and TTL available on PCB</li>
+        </ul>
+        <a class="button button-white" href="https://www.shop.rusefi.com/shop/p/uaefi-ultra-affordable-efi">Shop uaEFI hardware</a>
+        <a class="button button-white" href="https://github.com/rusefi/rusefi/wiki/uaEFI">uaEFI
+          Manual</a>
+      </div>
+    </div>
+  </div>
+  
+<div class="mre" id="microRusEFI">
     <div class="mre-left">
       <div class="mre-content">
         <img src="images/site/mre_ecu.png" width="100%">
@@ -289,7 +345,7 @@
     </div>
     <div class="mre-right">
       <div class="mre-content">
-        <h6 class="docs-header">microRusEFI</h6>
+        <h6 class="docs-header">MicroRusEFI</h6>
         <img src="images/site/mre_logo.png" width="50%">
         <br><br>
         <p>microRusEFI is a small & cheap Engine Management System board designed for fully sequential 1, 2, 3 and 4
@@ -324,7 +380,7 @@
       </div>
     </div>
   </div>
-
+  
   <div class="proteus" id="proteus">
     <div class="proteus-left">
       <div class="proteus-content">
