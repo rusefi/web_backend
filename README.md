@@ -1,5 +1,9 @@
 # Click here for [rusEFI Online](https://rusefi.com/online)
 
+* rusEFI static landing page is at https://github.com/rusefi/web_backend/tree/master/www
+
+* shop.rusefi.com is Squarespace
+
 
 # About web_backend
 
