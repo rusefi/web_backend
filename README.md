@@ -4,6 +4,8 @@
 
 * shop.rusefi.com is Squarespace
 
+* wiki.rusefi.com and https://github.com/rusefi/rusefi/wiki/ same content see https://github.com/rusefi/rusefi/wiki/HOWTO-contribute-to-documentation
+
 
 # About web_backend
 
