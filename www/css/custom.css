@@ -300,7 +300,7 @@ html {
     background-position: center;
   }
 
-  .ua-left {
+.ua-left {
     position: relative;
     width: 50%;
     height: 100%;
@@ -309,18 +309,20 @@ html {
     display: table-cell;
     display: none;
     vertical-align: middle;
-  }
-
-  .ua-right {
-    position: relative;
-    width: 50%;
-    height: 100%;
     background-color: #252a2b;
-    z-index: 1;
     color: #ffffff;
-    display: table-cell;
-    vertical-align: middle;
-  }
+
+}
+.ua-right {
+  position: relative;
+  width: 50%;
+  height: 100%;
+  
+  z-index: 1;
+  display: table-cell;
+  vertical-align: middle;
+}
+
 
   .ua-content {
     padding: 20%;
@@ -393,6 +395,24 @@ html {
     animation: 1s blink step-end infinite;
   }
 
+  .title-orange-background {
+  background-color: #F15A24;
+  font-family: 'Work Sans', sans-serif;    /* text-shadow: 0px 3px, 3px 0px,3px 3px; */
+  font-size: 8rem;
+  color: #252a2b;
+  }
+  
+  .blinking-orange-background {
+    /* font-weight: 1300; */
+    /* font-size: 2rem; */
+    font-size: 10rem;
+    background-color: #F15A24;
+    -webkit-animation: 1s blink step-end infinite;
+    -moz-animation: 1s blink step-end infinite;
+    -ms-animation: 1s blink step-end infinite;
+    -o-animation: 1s blink step-end infinite;
+    animation: 1s blink step-end infinite;
+  }
   @keyframes "blink" {
     from, to {
       color: transparent;
