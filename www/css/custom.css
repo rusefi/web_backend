@@ -395,14 +395,24 @@ html {
     animation: 1s blink step-end infinite;
   }
 
-  .title-blue-background {
-  background-color: #33C3F0;
+  .title-orange-background {
+  background-color: #F15A24;
   font-family: 'Work Sans', sans-serif;    /* text-shadow: 0px 3px, 3px 0px,3px 3px; */
   font-size: 8rem;
   color: #252a2b;
-
   }
   
+  .blinking-orange-background {
+    /* font-weight: 1300; */
+    /* font-size: 2rem; */
+    font-size: 10rem;
+    background-color: #F15A24;
+    -webkit-animation: 1s blink step-end infinite;
+    -moz-animation: 1s blink step-end infinite;
+    -ms-animation: 1s blink step-end infinite;
+    -o-animation: 1s blink step-end infinite;
+    animation: 1s blink step-end infinite;
+  }
   @keyframes "blink" {
     from, to {
       color: transparent;
