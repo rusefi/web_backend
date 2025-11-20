@@ -1,0 +1,21 @@
+VECTOR FILES:
+use for print, signage, apparel, etc
+.PDF - can be viewed by anyone
+.EPS - only viewable if have design software
+.SVG - only viewable if have design software
+
+FLATTENED FILES:
+not editable, mainly for using online and low res purposes
+.JPG - White on black background or black on white background
+.PNG - Transparent background logos, for putting over photos
+
+FONTS USED:
+Benton Sans - Bold
+Audiowide - Regular
+
+COLORS USED:
+Warmer Orange
+Dark Grey
+*no specific Pantone Colors chosen
+*CMYK
+
