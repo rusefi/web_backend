@@ -1,0 +1,3 @@
+<Location "/docs/guide">
+    Header set Access-Control-Allow-Origin "*"
+</Location>
