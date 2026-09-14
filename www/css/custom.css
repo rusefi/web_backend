@@ -703,6 +703,15 @@ html {
     color: rgb(230, 230, 230);
   }
 
+  .est-line {
+    color: rgba(230, 230, 230, 0.6);
+    font-size: 1.4rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    margin-top: -1rem;
+    margin-bottom: 2rem;
+  }
+
   #intro,
   #proteus,
   #links {
