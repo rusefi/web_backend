@@ -355,7 +355,8 @@ html {
     align-items: center;
     z-index: 1;
     display: table-cell;
-    background-color: #a5a5a5;
+    background-color: #252A2B;
+    color: #E6E6E6;
     vertical-align: middle;
   }
 
@@ -370,10 +371,15 @@ html {
     display: none;  
   }
 
+  /* uaEFI wordmark: brand orange on graphite (rusefi-brand.md §3, §9.4); the framework blue block is gone */
   .proteus-left h1 {
-    background-color: #33C3F0;
+    color: #F15A24;
     font-family: 'Work Sans', sans-serif;    /* text-shadow: 0px 3px, 3px 0px,3px 3px; */
     font-size: 5rem;
+  }
+  .proteus-left a:not(.button) {
+    color: #E6E6E6;
+    text-decoration: underline;
   }
 
   .proteus-content {
@@ -381,18 +387,6 @@ html {
     text-align: left;
     vertical-align: middle;
     font-size: 1.3rem;
-  }
-
-  .blinking {
-    /* font-weight: 1300; */
-    /* font-size: 2rem; */
-    font-size: 10rem;
-    background-color: #33C3F0;
-    -webkit-animation: 1s blink step-end infinite;
-    -moz-animation: 1s blink step-end infinite;
-    -ms-animation: 1s blink step-end infinite;
-    -o-animation: 1s blink step-end infinite;
-    animation: 1s blink step-end infinite;
   }
 
   .title-orange-background {
@@ -692,7 +686,7 @@ html {
       display: table-cell;
     }
     .proteus-left h1 {
-      padding: 1rem;
+      padding: 0;
       font-size: 8rem;
     }
   }
@@ -742,4 +736,226 @@ html {
     color: #fff;
     background-color: #d94a17;
     border-color: #d94a17;
+  }
+
+  /* Shop / Buy buttons: brand orange; white text only at 18px+ (rusefi-brand.md §3) */
+  .button.button-shop,
+  .button.button-shop:hover,
+  .button.button-shop:focus {
+    background: #F15A24;
+    border-color: #F15A24;
+    color: #fff;
+    font-weight: 600;
+    font-size: 18px;
+  }
+
+  /* Outline button on dark backgrounds (hero "Which board do I need?", uaEFI manual); without this Skeleton's default #555 text is hard to read there */
+  .button.button-white {
+    color: #FFFFFF;
+    border-color: #FFFFFF;
+    background: transparent;
+  }
+  .button.button-white:hover,
+  .button.button-white:focus {
+    color: #FFFFFF;
+    border-color: #FFFFFF;
+    background: rgba(255, 255, 255, 0.12);
+  }
+
+  /* Mobile menu: scroll when it is taller than the screen (the longer Hardware list no longer fits on a phone) */
+  topnav {
+    max-height: 100vh;
+    overflow-y: auto;
+  }
+
+  /* "Which board do I need?" table: scrolls if too wide; on phones each row becomes a stacked block so Buy stays visible */
+  .chooser-wrap {
+    overflow-x: auto;
+  }
+  @media (max-width: 749px) {
+    .chooser thead {
+      display: none;
+    }
+    .chooser tr {
+      display: block;
+      padding: 1.5rem 0;
+      border-bottom: 1px solid #E1E1E1;
+    }
+    .chooser td {
+      display: block;
+      padding: 0;
+      border: 0;
+    }
+    .chooser td:nth-child(2) {
+      font-size: 1.8rem;
+    }
+    .chooser td:last-child {
+      margin-top: 1rem;
+    }
+  }
+
+  /* Board cards (#boards) */
+  .board-card { padding: 0 0.5rem 1.5rem; }
+  .board-card img { border-radius: 4px; margin-bottom: 0.8rem; }
+  .board-card ul { margin-bottom: 0.8rem; }
+
+  /* Light gray band (Getting started, Where to buy). Links use the text-safe brand orange: the default link orange is too faint on gray (rusefi-brand.md §3) */
+  .section-gray {
+    background-color: #EEEEEE;
+  }
+  .section-gray a:not(.button) {
+    color: #B8441A;
+  }
+
+  /* Headings inside the blocks below: small and bold instead of Skeleton's large h3 */
+  .step-title,
+  .faq-q,
+  .store-title {
+    margin: 0 0 0.4rem;
+    font-size: 1.7rem;
+    font-weight: 600;
+    line-height: 1.4;
+    letter-spacing: 0;
+    color: #252A2B;
+  }
+
+  /* Getting started: numbered timeline */
+  .steps {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+  .steps li {
+    position: relative;
+    display: grid;
+    grid-template-columns: 3.6rem minmax(0, 1fr);
+    column-gap: 2.4rem;
+    margin: 0;
+  }
+  .steps li:not(:last-child)::before {
+    content: "";
+    position: absolute;
+    left: 1.7rem;
+    top: 4rem;
+    bottom: 0.4rem;
+    width: 2px;
+    background: #D0D0D0;
+  }
+  .step-num {
+    width: 3.6rem;
+    height: 3.6rem;
+    box-sizing: border-box;
+    border: 2px solid #F15A24;
+    border-radius: 50%;
+    background: #FFFFFF;
+    color: #B8441A;
+    font-size: 1.6rem;
+    font-weight: 600;
+    line-height: 3.2rem;
+    text-align: center;
+  }
+  .step-body {
+    padding: 0.5rem 0 2.8rem;
+  }
+  .steps li:last-child .step-body {
+    padding-bottom: 0;
+  }
+  .step-body p {
+    margin: 0;
+  }
+
+  /* FAQ: all answers visible; two columns from tablet up; last cell is the dark "Still have a question?" box */
+  .faq-grid {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    gap: 3.2rem;
+  }
+  .faq-item::before {
+    content: "";
+    display: block;
+    width: 3.2rem;
+    height: 3px;
+    margin-bottom: 1rem;
+    background: #F15A24;
+  }
+  .faq-item p {
+    margin: 0;
+  }
+  .faq-more {
+    padding: 2.8rem;
+    border-radius: 6px;
+    background: #252A2B;
+    color: #C9CDCE;
+  }
+  .faq-more .faq-q {
+    color: #FFFFFF;
+  }
+  .faq-more p {
+    margin: 0 0 1.6rem;
+  }
+  .faq-more a:not(.button) {
+    color: #FFFFFF;
+    text-decoration: underline;
+  }
+  .faq-more .button {
+    margin-bottom: 0;
+  }
+
+  /* Thin line between FAQ and Firmware features: both sections are white */
+  #features {
+    border-top: 1px solid #E1E1E1;
+  }
+
+  /* Where to buy: two equal store cards; one column on phones */
+  .store-grid {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    gap: 2.4rem;
+  }
+  .store-card {
+    display: flex;
+    flex-direction: column;
+    padding: 3.2rem;
+    border: 1px solid #E1E1E1;
+    border-radius: 6px;
+    background: #FFFFFF;
+  }
+  .store-img {
+    display: flex;
+    align-items: center;
+    height: 15rem;
+    margin-bottom: 1.6rem;
+  }
+  .store-img img {
+    width: auto;
+    height: auto;
+    max-width: 100%;
+    max-height: 15rem;
+  }
+  .store-title {
+    margin-bottom: 0.8rem;
+    font-size: 2.2rem;
+  }
+  .store-card p {
+    margin: 0 0 1rem;
+  }
+  .store-note {
+    flex-grow: 1;
+    font-size: 1.3rem;
+    color: #757575;
+  }
+  .store-card .button {
+    align-self: flex-start;
+    margin: 1.2rem 0 0;
+  }
+
+  @media (min-width: 750px) {
+    .faq-grid {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      column-gap: 4.8rem;
+      row-gap: 4rem;
+    }
+    .store-grid {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
   }

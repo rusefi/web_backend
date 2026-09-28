@@ -129,3 +129,15 @@ $(document).ready(function() {
     init();
   
   });
+
+// GA4: one "home_click" event per tracked link, parameter "button" = data-button value.
+// Does not call preventDefault, so navigation is not blocked.
+document.addEventListener('click', function (e) {
+  var a = e.target.closest && e.target.closest('a[data-button]');
+  if (!a || typeof gtag !== 'function') return;
+  gtag('event', 'home_click', {
+    button: a.getAttribute('data-button'),
+    link_url: a.href,
+    transport_type: 'beacon'
+  });
+});
