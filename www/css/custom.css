@@ -729,3 +729,17 @@ html {
   td.evenrow {
     background-color: #91919100;
   }
+
+  .button.button-orange {
+    color: #fff;
+    background-color: #f15a24;
+    border-color: #f15a24;
+    font-size: 1.3rem;
+    padding: 0 40px;
+  }
+  .button.button-orange:hover,
+  .button.button-orange:focus {
+    color: #fff;
+    background-color: #d94a17;
+    border-color: #d94a17;
+  }
