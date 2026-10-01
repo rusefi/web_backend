@@ -4,16 +4,18 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>rusEFI · links</title>
-  <meta name="description" content="uaEFI and other open-source rusEFI engine control units: where to buy, which board fits your engine, and where to get help.">
+  <meta name="description" content="Open-source standalone ECUs from $225: which board fits your engine, where to buy, and where to get help.">
   <meta name="robots" content="noindex">
-  <link rel="icon" type="image/png" href="/images/site/favicon.png">
+  <!-- Paths to our own files are relative to www/links/, so the page also works from a local copy -->
+  <link rel="icon" type="image/png" href="../images/site/favicon.png">
 
-  <meta property="og:title" content="rusEFI: open-source engine management">
-  <meta property="og:description" content="uaEFI from $275. Which board fits your engine, the store, and free community help.">
+  <meta property="og:title" content="rusEFI - open-source standalone ECUs from $225">
+  <meta property="og:description" content="uaEFI from $275. Which board fits your engine, where to buy, and free community help.">
+  <!-- og:image stays a full URL: social previews do not read relative paths -->
   <meta property="og:image" content="https://rusefi.com/links/uaefi.webp">
 
-  <!-- Meta Pixel (same as the main page) -->
-  <script src="/fb.js"></script>
+  <!-- Meta Pixel (same file as the main page) -->
+  <script src="../fb.js"></script>
 
   <!-- Google tag (gtag.js) - Google Analytics 4 -->
   <script async src="https://www.googletagmanager.com/gtag/js?id=G-8DR395FQD1"></script>
@@ -62,7 +64,7 @@
     a { color: inherit; }
     a:focus-visible { outline: 3px solid var(--orange); outline-offset: 3px; }
 
-    /* Masthead */
+    /* Masthead: same three lines as the main page hero (logo, tagline, est. line) */
     .masthead {
       background: var(--graphite);
       color: var(--white);
@@ -73,8 +75,15 @@
     .tagline {
       margin: 12px 0 0;
       font-weight: 300;
-      font-size: 15px;
+      font-size: 17px;
       color: var(--light);
+    }
+    .est {
+      margin: 4px 0 0;
+      font-size: 12px;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: rgba(238, 238, 238, 0.65);
     }
 
     /* Headings */
@@ -102,6 +111,7 @@
       height: auto;
       margin: 2px 0 8px 14px;
     }
+    .featured h2 { font-size: 30px; }
     .featured p { margin: 0 0 10px; }
 
     /* Buttons */
@@ -114,14 +124,15 @@
       font-weight: 600;
       line-height: 1.3;
     }
+    /* Orange button: white 600 text at 18px+, as on the main page (rusefi-brand.md, section 3) */
     .btn-primary {
       clear: both;
       margin-top: 14px;
       background: var(--orange);
-      color: var(--ink);
+      color: var(--white);
       font-size: 19px;
     }
-    .btn-primary:active { background: var(--orange-dark); color: var(--white); }
+    .btn-primary:active { background: var(--orange-dark); }
 
     .btn-outline {
       border: 2px solid var(--graphite);
@@ -179,31 +190,57 @@
       margin: 36px 0 40px;
     }
 
-    /* Footer */
+    /* Footer: same columns and links as the main page footer */
     .footer {
       background: var(--graphite);
       color: var(--light);
-      padding: 24px 0 28px;
-      font-size: 14px;
+      padding: 28px 0 24px;
+      font-size: 15px;
     }
-    .social {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 4px 20px;
-      margin: 0 0 14px;
+    .footer-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 20px 24px;
+    }
+    .footer h2 {
+      margin: 0 0 4px;
+      font-family: var(--text);
+      font-size: 15px;
+      font-weight: 600;
+      letter-spacing: 0;
+      color: var(--white);
+    }
+    .footer ul {
+      margin: 0;
       padding: 0;
       list-style: none;
-      font-size: 16px;
     }
-    .social a {
+    .footer a {
       display: inline-block;
-      padding: 8px 0;
-      color: var(--white);
-      text-decoration-color: var(--orange);
-      text-decoration-thickness: 2px;
-      text-underline-offset: 3px;
+      padding: 6px 0;
+      text-decoration: none;
     }
-    .footer p { margin: 0 0 4px; }
+    .footer a:hover,
+    .footer a:active,
+    .footer a:focus-visible {
+      color: var(--orange);
+      text-decoration: underline;
+    }
+    .footer-note {
+      margin: 20px 0 0;
+      font-size: 13px;
+      color: rgba(238, 238, 238, 0.65);
+    }
+    .footer-bottom {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 0 20px;
+      margin: 12px 0 0;
+      padding-top: 10px;
+      border-top: 1px solid rgba(238, 238, 238, 0.2);
+      font-size: 13px;
+    }
   </style>
 </head>
 
@@ -212,60 +249,62 @@
   <header class="masthead">
     <div class="wrap">
       <h1 class="brand">
-        <a href="https://rusefi.com/" data-link="logo_home">
-          <img src="/images/site/logo_wht.png" width="800" height="185" alt="rusEFI">
+        <a href="../index.html" data-link="logo_home">
+          <img src="../images/site/logo_wht.png" width="800" height="185" alt="rusEFI">
         </a>
       </h1>
-      <p class="tagline">Open-source engine management, since 2012</p>
+      <p class="tagline">Open-source engine management</p>
+      <p class="est">Est. 2012 in Chicago, IL</p>
     </div>
   </header>
 
   <main class="wrap">
 
     <section class="featured" aria-labelledby="featured-title">
-      <img src="/links/uaefi.webp" width="560" height="506"
+      <img src="uaefi.webp" width="560" height="506"
            alt="uaEFI circuit board with five white Molex connectors" fetchpriority="high">
-      <h2 id="featured-title">Our most popular ECU</h2>
-      <p>uaEFI (“Ultra Affordable EFI”) is a standalone engine ECU running open-source rusEFI firmware, currently starting at $275.</p>
-      <p>The fuss is features per dollar: six-cylinder sequential fuel/ignition, electronic throttle, built-in wideband oxygen-sensor control, CAN and SD logging.</p>
+      <h2 id="featured-title">uaEFI</h2>
+      <p>Our most popular ECU: a standalone for 1–6 cylinder port-injected gasoline engines.</p>
+      <p>Sequential fuel and spark, wideband controller, knock input and drive-by-wire on one board, fully assembled. From $275.</p>
       <a class="btn btn-primary" data-link="uaefi"
          href="https://www.shop.rusefi.com/shop/p/uaefi-ultra-affordable-efi">Shop uaEFI</a>
     </section>
 
     <section class="chooser" aria-labelledby="chooser-title">
-      <h2 id="chooser-title">Which board for my engine?</h2>
+      <h2 id="chooser-title">Which board do I need?</h2>
+      <!-- [CHECK] prices as on the main page (checked 26 Sep 2026); re-check against the store on the day of the PR -->
       <ul>
         <li>
           <a class="row" data-link="chooser_nano" href="https://www.shop.rusefi.com/shop/p/nano">
-            <span class="need">1–2 cylinders, or a simple batch-fire 4</span>
+            <span class="need">1–2 cylinders</span>
             <span class="board">nano</span>
             <span class="price">from $225</span>
           </a>
         </li>
         <li>
           <a class="row" data-link="chooser_uaefi" href="https://www.shop.rusefi.com/shop/p/uaefi-ultra-affordable-efi">
-            <span class="need">Up to 6 cylinders, sequential</span>
+            <span class="need">1–6 cylinders, sequential</span>
             <span class="board">uaEFI</span>
             <span class="price">from $275</span>
           </a>
         </li>
         <li>
           <a class="row" data-link="chooser_uaefi121" href="https://www.shop.rusefi.com/shop/p/uaefi121">
-            <span class="need">6–8 cylinders, sealed metal case with one plug</span>
+            <span class="need">Up to 6 cylinders sequential, 8 on wasted spark; factory-style 121-pin connector, optional metal case</span>
             <span class="board">uaEFI 121</span>
             <span class="price">from $375</span>
           </a>
         </li>
         <li>
           <a class="row" data-link="chooser_super_uaefi" href="https://www.shop.rusefi.com/shop/p/super-uaefi">
-            <span class="need">6–8 cylinders, Superseal motorsport connector</span>
+            <span class="need">Up to 6 cylinders sequential, 8 on wasted spark; Superseal 120-pin motorsport connector</span>
             <span class="board">super-uaEFI</span>
             <span class="price">from $410</span>
           </a>
         </li>
         <li>
           <a class="row" data-link="chooser_huge" href="https://www.shop.rusefi.com/shop/p/rusefi-huge">
-            <span class="need">10–12 cylinders, dual electronic throttle</span>
+            <span class="need">8 to 12 cylinders, sequential</span>
             <span class="board">rusEFI Huge</span>
             <span class="price">from $850</span>
           </a>
@@ -277,43 +316,78 @@
             <span class="price">$1,050</span>
           </a>
         </li>
+        <li>
+          <!-- [CHECK] replace href with the Plug-and-play category URL from the shop; points to all products for now, as on the main page -->
+          <a class="row" data-link="pnp" href="https://www.shop.rusefi.com/shop">
+            <span class="need">Honda OBD1, Honda K, GM LS (E38): drops into the factory harness</span>
+            <span class="board">Plug-and-play</span>
+            <span class="price">from $470</span>
+          </a>
+        </li>
       </ul>
     </section>
 
     <nav class="more" aria-label="More rusEFI links">
-      <!-- TODO before merge: replace href with the Plug&Play category URL from the shop -->
-      <a class="btn btn-outline" data-link="pnp" href="https://www.shop.rusefi.com/shop">
-        Plug-and-play ECUs
-        <small>Honda OBD1, GM LS (E38), Honda K</small>
-      </a>
       <a class="btn btn-outline" data-link="all_products" href="https://www.shop.rusefi.com/shop">
-        All products
+        rusEFI Shop
+        <small>All ECUs, plug-and-play boards, adapters</small>
+      </a>
+      <a class="btn btn-outline" data-link="ebay" href="https://www.ebay.com/str/rusefi">
+        rusEFI on eBay
+        <small>Breakout boards and connectors for about 45 factory ECU plugs</small>
       </a>
       <a class="btn btn-outline" data-link="getting_started" href="https://wiki.rusefi.com/Getting-Started/">
         Getting started guide
         <small>From choosing a board to first start</small>
       </a>
-      <a class="btn btn-outline" data-link="youtube" href="https://www.youtube.com/user/rusefi">
-        rusEFI on YouTube
-      </a>
       <a class="btn btn-outline" data-link="discord" href="https://discord.gg/rCGAUaZJKF">
         Community help on Discord
         <small>Free answers from other rusEFI builders</small>
+      </a>
+      <a class="btn btn-outline" data-link="youtube" href="https://www.youtube.com/user/rusefi">
+        rusEFI on YouTube
       </a>
     </nav>
 
   </main>
 
+  <!-- Footer: same links as the main page footer (www/index.html), without the icons and the Donate link -->
   <footer class="footer">
     <div class="wrap">
-      <ul class="social">
-        <li><a data-link="facebook_group" href="https://www.facebook.com/groups/rusEfi">Facebook group</a></li>
-        <li><a data-link="forum" href="https://rusefi.com/forum/">Forum</a></li>
-        <li><a data-link="github" href="https://github.com/rusefi/rusefi">GitHub</a></li>
-        <li><a data-link="ebay" href="https://www.ebay.com/str/rusefi">Breakout boards on eBay</a></li>
-      </ul>
-      <p>Prices in US dollars, before shipping.</p>
-      <p>Rusefi LLC</p>
+      <div class="footer-grid">
+        <div>
+          <h2>Buy</h2>
+          <ul>
+            <li><a data-link="footer_shop" href="https://www.shop.rusefi.com/shop">rusEFI Shop</a></li>
+            <li><a data-link="footer_ebay" href="https://www.ebay.com/str/rusefi">rusEFI on eBay</a></li>
+            <li><a data-link="footer_accessories" href="../accessories.html">rusEFI accessories</a></li>
+          </ul>
+        </div>
+        <div>
+          <h2>Help</h2>
+          <ul>
+            <li><a data-link="footer_wiki" href="https://wiki.rusefi.com/">Wiki</a></li>
+            <li><a data-link="footer_forum" href="https://rusefi.com/forum/">Forum</a></li>
+            <li><a data-link="footer_discord" href="https://discord.gg/rCGAUaZJKF">Discord</a></li>
+          </ul>
+        </div>
+        <div>
+          <h2>Follow</h2>
+          <ul>
+            <li><a data-link="footer_instagram" href="https://www.instagram.com/rusefillc/">Instagram</a></li>
+            <li><a data-link="footer_facebook" href="https://www.facebook.com/rusEfiECU/">Facebook</a></li>
+            <li><a data-link="footer_youtube" href="https://www.youtube.com/user/rusefi">YouTube</a></li>
+            <li><a data-link="footer_github" href="https://github.com/rusefi">GitHub</a></li>
+          </ul>
+        </div>
+      </div>
+      <p class="footer-note">Prices in US dollars, before shipping. Boards ship from New Jersey, USA.</p>
+      <!-- [CHECK] ../terms/ and ../privacy/ must be live before merge -->
+      <p class="footer-bottom">
+        <a data-link="footer_terms" href="../terms/">Terms of Use</a>
+        <a data-link="footer_privacy" href="../privacy/">Privacy Policy</a>
+        <span>© Rusefi LLC</span>
+      </p>
     </div>
   </footer>
 
