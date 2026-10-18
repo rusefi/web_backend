@@ -1,0 +1,6 @@
+Options -Indexes
+
+<IfModule mod_rewrite.c>
+	RewriteEngine On
+	RewriteRule ^(.+\.ini)$ index.php?path=$1 [L]
+</IfModule>
