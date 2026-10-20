@@ -5,34 +5,43 @@ repo=$(cd "$(dirname "$0")/.." && pwd)
 command -v httpd >/dev/null || { echo 'httpd is required' >&2; exit 77; }
 command -v php-cgi >/dev/null || { echo 'php-cgi is required' >&2; exit 77; }
 command -v curl >/dev/null || { echo 'curl is required' >&2; exit 77; }
-config_path="$repo/www/online/config_rusefi.php"
-if [[ -e "$config_path" || -L "$config_path" ]]; then
-	echo 'refusing to replace existing R2 config in Apache test' >&2
-	exit 77
-fi
+command -v git >/dev/null || { echo 'git is required' >&2; exit 77; }
 
-tmp=$(mktemp -d /tmp/opencode/ini-apache-test.XXXXXX)
-prefix="apache-test-$RANDOM-$$"
-base="$repo/www/online/ini/$prefix"
-config_created=0
+tmp=$(mktemp -d /tmp/opencode/ini-rollback-apache.XXXXXX)
+docroot="$tmp/www"
+git -C "$repo" archive dd618783a71966079d0056f0d3656effb8334cc8 www | tar -x -C "$tmp"
+
+# Apply only the rollback files, as the production tar overlay does. Do not
+# delete the stale R2 handler or any other files from the production snapshot.
+cp "$repo/www/online/ini/.htaccess" "$docroot/online/ini/.htaccess"
+cp "$repo/www/online/ini/index.php" "$docroot/online/ini/index.php"
+cp "$repo/www/ini_test/.htaccess" "$docroot/ini_test/.htaccess"
+cp "$repo/www/ini_test/index.php" "$docroot/ini_test/index.php"
+
+# The site's unrelated root rule forces HTTPS; this isolated HTTP-only server
+# tests the unchanged endpoint .htaccess files without needing a TLS fixture.
+cat > "$docroot/.htaccess" <<'HTACCESS'
+RewriteEngine On
+HTACCESS
+
+mkdir -p "$docroot/online/ini/test-rollback/release/2024/01/02/board" \
+	"$docroot/online/ini/test-rollback/release/2026/01/02/board" \
+	"$docroot/online/ini/test-rollback/release/2024/01/02/NUCLEO-F7" \
+	"$docroot/online/ini/test-rollback/release/2024/01/02/discovery-board" \
+	"$docroot/online/ini/test-rollback/release/2024/01/02/F407-Discovery"
+printf 'older static bytes\0\n' > "$docroot/online/ini/test-rollback/release/2024/01/02/board/old.ini"
+printf 'newer static bytes\n' > "$docroot/online/ini/test-rollback/release/2026/01/02/board/new.ini"
+printf 'nucleo static bytes\n' > "$docroot/online/ini/test-rollback/release/2024/01/02/NUCLEO-F7/old.ini"
+printf 'discovery static bytes\n' > "$docroot/online/ini/test-rollback/release/2024/01/02/discovery-board/old.ini"
+printf 'f407 static bytes\n' > "$docroot/online/ini/test-rollback/release/2024/01/02/F407-Discovery/old.ini"
+
+# If any PHP path loads production R2 configuration, fail this isolated test.
+cat > "$docroot/online/config_rusefi.php" <<'PHP'
+<?php
+throw new RuntimeException('synthetic R2 config was loaded');
+PHP
+
 port=$(php -r '$s=stream_socket_server("tcp://127.0.0.1:0", $n, $e); echo substr(strrchr(stream_socket_get_name($s, false), ":"), 1);')
-cleanup() {
-	if [[ -n ${server_pid:-} ]]; then kill "$server_pid" 2>/dev/null || true; wait "$server_pid" 2>/dev/null || true; fi
-	if [[ "$config_created" == 1 ]]; then rm -f "$config_path"; fi
-	rm -f "$base/release/2026/01/02/NUCLEO-F7/2026.ini" "$base/release/2024/01/02/NUCLEO-F7/old.ini" "$base/release/2024/01/02/discoveryfoo/old.ini" "$base/release/2024/01/02/myNucleoBoard/old.ini" "$base/release/2024/01/02/F407-Discovery/old.ini" "$base/release/2024/01/02/board/old.ini"
-	rmdir "$base/release/2026/01/02/NUCLEO-F7" "$base/release/2026/01/02" "$base/release/2026/01" "$base/release/2026" "$base/release/2024/01/02/NUCLEO-F7" "$base/release/2024/01/02/discoveryfoo" "$base/release/2024/01/02/myNucleoBoard" "$base/release/2024/01/02/F407-Discovery" "$base/release/2024/01/02/board" "$base/release/2024/01/02" "$base/release/2024/01" "$base/release/2024" "$base/release" "$base" 2>/dev/null || true
-	rm -rf "$tmp"
-}
-trap cleanup EXIT
-
-mkdir -p "$base/release/2026/01/02/NUCLEO-F7" "$base/release/2024/01/02/NUCLEO-F7" "$base/release/2024/01/02/discoveryfoo" "$base/release/2024/01/02/myNucleoBoard" "$base/release/2024/01/02/F407-Discovery" "$base/release/2024/01/02/board"
-printf 'unchanged 2026 static\0bytes\n' > "$base/release/2026/01/02/NUCLEO-F7/2026.ini"
-printf 'nucleo static\0bytes\n' > "$base/release/2024/01/02/NUCLEO-F7/old.ini"
-printf 'local discovery fallback\n' > "$base/release/2024/01/02/discoveryfoo/old.ini"
-printf 'nucleo substring static\n' > "$base/release/2024/01/02/myNucleoBoard/old.ini"
-printf 'f407 discovery eligible\n' > "$base/release/2024/01/02/F407-Discovery/old.ini"
-printf 'older local fallback\n' > "$base/release/2024/01/02/board/old.ini"
-
 uid=$(id -u)
 gid=$(id -g)
 cat > "$tmp/httpd.conf" <<EOF
@@ -53,8 +62,8 @@ LoadModule alias_module modules/mod_alias.so
 LoadModule cgid_module modules/mod_cgid.so
 User #$uid
 Group #$gid
-DocumentRoot "$repo/www"
-<Directory "$repo/www">
+DocumentRoot "$docroot"
+<Directory "$docroot">
   Require all granted
   AllowOverride All
   Options ExecCGI FollowSymLinks
@@ -68,16 +77,23 @@ EOF
 
 httpd -f "$tmp/httpd.conf" -DFOREGROUND >"$tmp/stdout.log" 2>&1 &
 server_pid=$!
+cleanup() {
+	if [[ -n ${server_pid:-} ]]; then kill "$server_pid" 2>/dev/null || true; wait "$server_pid" 2>/dev/null || true; fi
+	rm -rf "$tmp"
+}
+trap cleanup EXIT
 for _ in $(seq 1 50); do
-	if curl -fsS "http://127.0.0.1:$port/" -o /dev/null 2>/dev/null; then break; fi
+	if curl -sS "http://127.0.0.1:$port/" -o /dev/null 2>/dev/null; then break; fi
 	sleep 0.1
 done
 if ! kill -0 "$server_pid" 2>/dev/null; then cat "$tmp/stdout.log" "$tmp/error.log" >&2; exit 1; fi
 
 request() {
-	local expected=$1 url=$2
+	local expected=$1
+	shift
+	local url=${@: -1}
 	local code
-	code=$(curl -sS -D "$tmp/headers" -o "$tmp/body" -w '%{http_code}' "$url")
+	code=$(curl -sS -D "$tmp/headers" -o "$tmp/body" -w '%{http_code}' "${@:1:$#-1}" "$url")
 	if [[ "$code" != "$expected" ]]; then
 		echo "expected HTTP $expected, got $code for $url" >&2
 		cat "$tmp/headers" "$tmp/body" "$tmp/error.log" >&2
@@ -85,69 +101,50 @@ request() {
 	fi
 }
 
-request 200 "http://127.0.0.1:$port/online/ini/$prefix/release/2026/01/02/NUCLEO-F7/2026.ini"
-cmp -s "$tmp/body" "$base/release/2026/01/02/NUCLEO-F7/2026.ini"
-if grep -iF 'X-Powered-By: PHP' "$tmp/headers" >/dev/null; then echo '2026 key unexpectedly used PHP handler' >&2; exit 1; fi
-range_code=$(curl -sS -H 'Range: bytes=0-8' -D "$tmp/headers" -o "$tmp/body" -w '%{http_code}' "http://127.0.0.1:$port/online/ini/$prefix/release/2026/01/02/NUCLEO-F7/2026.ini")
-[[ "$range_code" == 206 ]]
-printf 'unchanged' > "$tmp/expected"
-cmp -s "$tmp/body" "$tmp/expected"
-: > "$tmp/body"
-head_code=$(curl -sS -I -D "$tmp/headers" -o "$tmp/body" -w '%{http_code}' "http://127.0.0.1:$port/online/ini/$prefix/release/2026/01/02/NUCLEO-F7/2026.ini")
-[[ "$head_code" == 200 ]]
-static_size=$(wc -c < "$base/release/2026/01/02/NUCLEO-F7/2026.ini" | tr -d ' ')
-if ! grep -iF "Content-Length: $static_size" "$tmp/headers" >/dev/null; then cat "$tmp/headers" "$tmp/error.log" >&2; exit 1; fi
-if grep -iF 'X-Powered-By: PHP' "$tmp/headers" >/dev/null; then echo '2026 HEAD unexpectedly used PHP handler' >&2; exit 1; fi
-request 200 "http://127.0.0.1:$port/online/ini/index.php?path=$prefix/release/2026/01/02/NUCLEO-F7/2026.ini"
-cmp -s "$tmp/body" "$base/release/2026/01/02/NUCLEO-F7/2026.ini"
-grep -iF 'X-Powered-By: PHP' "$tmp/headers" >/dev/null
-: > "$tmp/body"
-head_code=$(curl -sS -I -D "$tmp/headers" -o "$tmp/body" -w '%{http_code}' "http://127.0.0.1:$port/online/ini/index.php?path=$prefix/release/2026/01/02/NUCLEO-F7/2026.ini")
-[[ "$head_code" == 200 ]]
-grep -iF 'X-Powered-By: PHP' "$tmp/headers" >/dev/null
-request 200 "http://127.0.0.1:$port/online/ini/$prefix/release/2024/01/02/NUCLEO-F7/old.ini"
-cmp -s "$tmp/body" "$base/release/2024/01/02/NUCLEO-F7/old.ini"
-grep -iF 'X-Powered-By: PHP' "$tmp/headers" >/dev/null
-range_code=$(curl -sS -H 'Range: bytes=0-5' -D "$tmp/headers" -o "$tmp/body" -w '%{http_code}' "http://127.0.0.1:$port/online/ini/$prefix/release/2024/01/02/NUCLEO-F7/old.ini")
-[[ "$range_code" == 200 ]]
-cmp -s "$tmp/body" "$base/release/2024/01/02/NUCLEO-F7/old.ini"
-request 200 "http://127.0.0.1:$port/online/ini/$prefix/release/2024/01/02/discoveryfoo/old.ini"
-cmp -s "$tmp/body" "$base/release/2024/01/02/discoveryfoo/old.ini"
-grep -iF 'X-Powered-By: PHP' "$tmp/headers" >/dev/null
-request 200 "http://127.0.0.1:$port/online/ini/$prefix/release/2024/01/02/myNucleoBoard/old.ini"
-cmp -s "$tmp/body" "$base/release/2024/01/02/myNucleoBoard/old.ini"
-grep -iF 'X-Powered-By: PHP' "$tmp/headers" >/dev/null
-request 200 "http://127.0.0.1:$port/online/ini/$prefix/release/2024/01/02/F407-Discovery/old.ini"
-cmp -s "$tmp/body" "$base/release/2024/01/02/F407-Discovery/old.ini"
-grep -iF 'X-Powered-By: PHP' "$tmp/headers" >/dev/null
-request 200 "http://127.0.0.1:$port/online/ini/index.php?path=$prefix/release/2024/01/02/NUCLEO-F7/old.ini"
-cmp -s "$tmp/body" "$base/release/2024/01/02/NUCLEO-F7/old.ini"
-grep -iF 'X-Powered-By: PHP' "$tmp/headers" >/dev/null
-request 200 "http://127.0.0.1:$port/online/ini/$prefix/release/2024/01/02/board/old.ini"
-cmp -s "$tmp/body" "$base/release/2024/01/02/board/old.ini"
-grep -iF 'Content-Type: application/octet-stream' "$tmp/headers" >/dev/null
-request 200 "http://127.0.0.1:$port/online/ini/$prefix/release/2024/01/02/board/old.ini?path=$prefix/release/2026/01/02/NUCLEO-F7/2026.ini"
-cmp -s "$tmp/body" "$base/release/2024/01/02/board/old.ini"
-request 302 "http://127.0.0.1:$port/ini_test/$prefix/release/2024/01/02/board/old.ini"
-grep -iF "/online/ini/$prefix/release/2024/01/02/board/old.ini" "$tmp/headers" >/dev/null
-request 302 "http://127.0.0.1:$port/ini_test/index.php?path=$prefix/release/2024/01/02/board/old.ini"
-grep -iF "/online/ini/$prefix/release/2024/01/02/board/old.ini" "$tmp/headers" >/dev/null
+base="http://127.0.0.1:$port"
+for path in \
+	test-rollback/release/2024/01/02/board/old.ini \
+	test-rollback/release/2026/01/02/board/new.ini \
+	test-rollback/release/2024/01/02/NUCLEO-F7/old.ini \
+	test-rollback/release/2024/01/02/discovery-board/old.ini \
+	test-rollback/release/2024/01/02/F407-Discovery/old.ini; do
+	request 200 "$base/online/ini/$path"
+	cmp -s "$tmp/body" "$docroot/online/ini/$path"
+	if grep -iF 'X-Powered-By: PHP' "$tmp/headers" >/dev/null; then
+		echo "native static URL unexpectedly used PHP: $path" >&2
+		exit 1
+	fi
+	head_code=$(curl -sS -I -D "$tmp/headers" -o /dev/null -w '%{http_code}' "$base/online/ini/$path")
+	[[ "$head_code" == 200 ]]
+	length=$(wc -c < "$docroot/online/ini/$path" | tr -d '[:space:]')
+	grep -iFx "Content-Length: $length" <(tr -d '\r' < "$tmp/headers") >/dev/null
+	request 206 -H 'Range: bytes=0-3' "$base/online/ini/$path"
+	head -c 4 "$docroot/online/ini/$path" > "$tmp/expected-range"
+	cmp -s "$tmp/body" "$tmp/expected-range"
+	request 200 "$base/online/ini/index.php?path=$path"
+	cmp -s "$tmp/body" "$docroot/online/ini/$path"
+	grep -iF 'X-Powered-By: PHP' "$tmp/headers" >/dev/null
+	head_code=$(curl -sS -I -D "$tmp/headers" -o /dev/null -w '%{http_code}' "$base/online/ini/index.php?path=$path")
+	[[ "$head_code" == 200 ]]
+	grep -iF 'Content-Type: application/octet-stream' "$tmp/headers" >/dev/null
+	grep -iF 'X-Powered-By: PHP' "$tmp/headers" >/dev/null
+done
 
-cat > "$config_path" <<'PHP'
-<?php
-throw new RuntimeException('synthetic R2 config failure');
-PHP
-config_created=1
-request 200 "http://127.0.0.1:$port/online/ini/$prefix/release/2024/01/02/board/old.ini"
-cmp -s "$tmp/body" "$base/release/2024/01/02/board/old.ini"
-if grep -F 'synthetic R2 config failure' "$tmp/body" >/dev/null; then echo 'config exception leaked into response' >&2; exit 1; fi
-request 502 "http://127.0.0.1:$port/online/ini/$prefix/release/2024/01/02/board/missing.ini"
-if grep -F 'synthetic R2 config failure' "$tmp/body" >/dev/null; then echo 'config exception leaked into error response' >&2; exit 1; fi
-: > "$tmp/body"
-head_code=$(curl -sS -I -D "$tmp/headers" -o "$tmp/body" -w '%{http_code}' "http://127.0.0.1:$port/online/ini/$prefix/release/2024/01/02/board/old.ini")
-[[ "$head_code" == 200 ]]
-grep -iF 'X-Powered-By: PHP' "$tmp/headers" >/dev/null
-request 200 "http://127.0.0.1:$port/online/ini/index.php?path=$prefix/release/2026/01/02/NUCLEO-F7/2026.ini"
-cmp -s "$tmp/body" "$base/release/2026/01/02/NUCLEO-F7/2026.ini"
+request 404 "$base/online/ini/test-rollback/release/2024/01/02/board/missing.ini"
+if grep -iF 'Location:' "$tmp/headers" >/dev/null; then echo 'missing static INI redirected' >&2; exit 1; fi
+request 404 "$base/online/ini/index.php?path=test-rollback/release/2024/01/02/board/missing.ini"
+if grep -iF 'Location:' "$tmp/headers" >/dev/null; then echo 'missing direct INI redirected' >&2; exit 1; fi
+request 400 "$base/online/ini/index.php?path=../config_rusefi.php"
+request 405 -X POST "$base/online/ini/index.php?path=test-rollback/release/2024/01/02/board/old.ini"
 
-echo 'isolated Apache INI routing checks passed'
+request 302 "$base/ini_test/test-rollback/release/2024/01/02/board/old.ini"
+grep -iF '/online/ini/test-rollback/release/2024/01/02/board/old.ini' "$tmp/headers" >/dev/null
+request 302 "$base/ini_test/index.php?path=test-rollback/release/2024/01/02/board/old.ini"
+grep -iF '/online/ini/test-rollback/release/2024/01/02/board/old.ini' "$tmp/headers" >/dev/null
+
+if grep -F 'synthetic R2 config was loaded' "$tmp/error.log" "$tmp/stdout.log" >/dev/null; then
+	echo 'a rollback endpoint loaded the R2 configuration fixture' >&2
+	exit 1
+fi
+
+echo 'production-overlay rollback INI routing checks passed'
