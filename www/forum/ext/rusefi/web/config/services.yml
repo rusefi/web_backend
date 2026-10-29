@@ -4,10 +4,10 @@ services:
     rusefi.web.listener:
         class: rusefi\web\event\listener
         arguments:
-            - @config
-            - @request
-            - @template
-            - @user
+            - '@config'
+            - '@request'
+            - '@template'
+            - '@user'
             - '@rusefi.web.utils'
         tags:
             - { name: event.listener }
